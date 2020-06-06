@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:semana_do_flutter/app/controllers/app_controller.dart';
+import 'package:semana_do_flutter/app/app_controller.dart';
+
 
 import 'pages/home/home_page.dart';
 
