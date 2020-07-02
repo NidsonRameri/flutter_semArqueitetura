@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:semana_do_flutter/app/interfaces/local_storage_interface.dart';
-import 'package:semana_do_flutter/app/models/appconfig_model.dart';
 import 'package:semana_do_flutter/app/services/shared_local_storage_service.dart';
+import 'package:semana_do_flutter/app/viewmodels/change_theme_viewmodel.dart';
 
 class AppController {
   static final AppController instance =
@@ -10,24 +10,14 @@ class AppController {
   //AppController._(); //protegido contra nova instancia || construtor privado!!!
 
   AppController._() {
-    storage.get('isDark').then((value) {
-      if (value != null) {
-        config.themeSwitch.value = value;
-      }
-    });
+    changeThemeViewModel.init();
   }
 
-  //acessar o app config para ver as configarções
-  final AppConfigModel config = AppConfigModel();
-  bool get isDark => config.themeSwitch.value;
-  ValueNotifier<bool> get themeSwitch => config.themeSwitch;
+  final ChangeThemeViewModel changeThemeViewModel =
+      ChangeThemeViewModel(storage: SharedLocalStorageService());
 
-  final ILocalStorage storage =
-      SharedLocalStorageService(); //acessa só o que tem na Interface
+  bool get isDark => changeThemeViewModel.config.themeSwitch.value;
 
-  changeTheme(bool value) {
-    //sharedPreferences
-    config.themeSwitch.value = value;
-    storage.put('isDark', value);
-  }
+  ValueNotifier<bool> get themeSwitch =>
+      changeThemeViewModel.config.themeSwitch;
 }
